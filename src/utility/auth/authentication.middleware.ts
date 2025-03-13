@@ -9,22 +9,27 @@ export async function expressAuthentication(
   request: Request,
   securityName: string,
   scopes?: string[]
-): Promise<IAccessToken|null> {
-
+): Promise<IAccessToken | null> {
   if (securityName === 'jwt') {
-    const authheader = request.headers.authorization || '';
-    if (!authheader.startsWith('Bearer ')) {
+    const authHeader = request.headers.authorization || '';
+    if (!authHeader.startsWith('Bearer ')) {
       throw new ApiError(ErrorCode.Unauthorized, 'auth/missing-header', 'Missing authorization header with Bearer token');
     }
 
-    const token = authheader.split('Bearer ')[1];
+    const token = authHeader.split('Bearer ')[1];
 
     const jwt = new JWT();
     let decoded = await jwt.decodeAndVerify<IAccessToken>(token, {
       issuer: JWT_ISSUER,
       audience: JWT_ACCESS_AUD,
     });
-    
+
+    if (scopes && scopes.length > 0) {
+      if (!decoded.role || !scopes.includes(decoded.role)) {
+        throw new ApiError(ErrorCode.Forbidden, 'auth/insufficient-permissions', `Access denied. Required roles: ${scopes.join(', ')}`);
+      }
+    }
+
     return decoded;
   }
 

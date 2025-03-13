@@ -258,6 +258,7 @@ export function RegisterRoutes(app: Router) {
                 request: {"in":"request","name":"request","required":true,"dataType":"object"},
         };
         app.post('/user/:userId/file',
+            authenticateMiddleware([{"jwt":["admin"]}]),
             ...(fetchMiddlewares<RequestHandler>(UserFileController)),
             ...(fetchMiddlewares<RequestHandler>(UserFileController.prototype.uploadFile)),
 
@@ -383,7 +384,7 @@ export function RegisterRoutes(app: Router) {
                 body: {"in":"body","name":"body","required":true,"ref":"IUserCreate"},
         };
         app.put('/user',
-            authenticateMiddleware([{"jwt":[]}]),
+            authenticateMiddleware([{"jwt":["admin"]}]),
             ...(fetchMiddlewares<RequestHandler>(UserController)),
             ...(fetchMiddlewares<RequestHandler>(UserController.prototype.createUser)),
 
@@ -446,7 +447,7 @@ export function RegisterRoutes(app: Router) {
                 body: {"in":"body","name":"body","required":true,"ref":"IUserUpdate"},
         };
         app.patch('/user/:userId',
-            authenticateMiddleware([{"jwt":[]}]),
+            authenticateMiddleware([{"jwt":["admin"]}]),
             ...(fetchMiddlewares<RequestHandler>(UserController)),
             ...(fetchMiddlewares<RequestHandler>(UserController.prototype.updateUser)),
 
@@ -477,7 +478,7 @@ export function RegisterRoutes(app: Router) {
                 userId: {"in":"path","name":"userId","required":true,"dataType":"double"},
         };
         app.delete('/user/:userId',
-            authenticateMiddleware([{"jwt":[]}]),
+            authenticateMiddleware([{"jwt":["admin"]}]),
             ...(fetchMiddlewares<RequestHandler>(UserController)),
             ...(fetchMiddlewares<RequestHandler>(UserController.prototype.deleteUser)),
 
@@ -569,7 +570,7 @@ export function RegisterRoutes(app: Router) {
                 body: {"in":"body","name":"body","required":true,"ref":"IFilmCreate"},
         };
         app.put('/film',
-            authenticateMiddleware([{"jwt":[]}]),
+            authenticateMiddleware([{"jwt":["admin"]}]),
             ...(fetchMiddlewares<RequestHandler>(FilmController)),
             ...(fetchMiddlewares<RequestHandler>(FilmController.prototype.createFilm)),
 
@@ -632,7 +633,7 @@ export function RegisterRoutes(app: Router) {
                 body: {"in":"body","name":"body","required":true,"ref":"IFilmUpdate"},
         };
         app.patch('/film/:filmId',
-            authenticateMiddleware([{"jwt":[]}]),
+            authenticateMiddleware([{"jwt":["admin"]}]),
             ...(fetchMiddlewares<RequestHandler>(FilmController)),
             ...(fetchMiddlewares<RequestHandler>(FilmController.prototype.updateFilm)),
 
@@ -663,7 +664,7 @@ export function RegisterRoutes(app: Router) {
                 filmId: {"in":"path","name":"filmId","required":true,"dataType":"double"},
         };
         app.delete('/film/:filmId',
-            authenticateMiddleware([{"jwt":[]}]),
+            authenticateMiddleware([{"jwt":["admin"]}]),
             ...(fetchMiddlewares<RequestHandler>(FilmController)),
             ...(fetchMiddlewares<RequestHandler>(FilmController.prototype.deleteFilm)),
 
@@ -679,6 +680,133 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'deleteFilm',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        const argsFilmController_getActorsByFilm: Record<string, TsoaRoute.ParameterSchema> = {
+                filmId: {"in":"path","name":"filmId","required":true,"dataType":"double"},
+        };
+        app.get('/film/:filmId/actor',
+            authenticateMiddleware([{"jwt":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(FilmController)),
+            ...(fetchMiddlewares<RequestHandler>(FilmController.prototype.getActorsByFilm)),
+
+            async function FilmController_getActorsByFilm(request: ExRequest, response: ExResponse, next: any) {
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args: argsFilmController_getActorsByFilm, request, response });
+
+                const controller = new FilmController();
+
+              await templateService.apiHandler({
+                methodName: 'getActorsByFilm',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        const argsFilmController_getActorByFilm: Record<string, TsoaRoute.ParameterSchema> = {
+                filmId: {"in":"path","name":"filmId","required":true,"dataType":"double"},
+                actorId: {"in":"path","name":"actorId","required":true,"dataType":"double"},
+        };
+        app.get('/film/:filmId/actor/:actorId',
+            authenticateMiddleware([{"jwt":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(FilmController)),
+            ...(fetchMiddlewares<RequestHandler>(FilmController.prototype.getActorByFilm)),
+
+            async function FilmController_getActorByFilm(request: ExRequest, response: ExResponse, next: any) {
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args: argsFilmController_getActorByFilm, request, response });
+
+                const controller = new FilmController();
+
+              await templateService.apiHandler({
+                methodName: 'getActorByFilm',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        const argsFilmController_addActorToFilm: Record<string, TsoaRoute.ParameterSchema> = {
+                filmId: {"in":"path","name":"filmId","required":true,"dataType":"double"},
+                actorId: {"in":"path","name":"actorId","required":true,"dataType":"double"},
+        };
+        app.put('/film/:filmId/actor/:actorId',
+            authenticateMiddleware([{"jwt":["admin"]}]),
+            ...(fetchMiddlewares<RequestHandler>(FilmController)),
+            ...(fetchMiddlewares<RequestHandler>(FilmController.prototype.addActorToFilm)),
+
+            async function FilmController_addActorToFilm(request: ExRequest, response: ExResponse, next: any) {
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args: argsFilmController_addActorToFilm, request, response });
+
+                const controller = new FilmController();
+
+              await templateService.apiHandler({
+                methodName: 'addActorToFilm',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        const argsFilmController_removeActorFromFilm: Record<string, TsoaRoute.ParameterSchema> = {
+                filmId: {"in":"path","name":"filmId","required":true,"dataType":"double"},
+                actorId: {"in":"path","name":"actorId","required":true,"dataType":"double"},
+        };
+        app.delete('/film/:filmId/actor/:actorId',
+            authenticateMiddleware([{"jwt":["admin"]}]),
+            ...(fetchMiddlewares<RequestHandler>(FilmController)),
+            ...(fetchMiddlewares<RequestHandler>(FilmController.prototype.removeActorFromFilm)),
+
+            async function FilmController_removeActorFromFilm(request: ExRequest, response: ExResponse, next: any) {
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args: argsFilmController_removeActorFromFilm, request, response });
+
+                const controller = new FilmController();
+
+              await templateService.apiHandler({
+                methodName: 'removeActorFromFilm',
                 controller,
                 response,
                 next,
@@ -786,7 +914,7 @@ export function RegisterRoutes(app: Router) {
                 body: {"in":"body","name":"body","required":true,"ref":"IActorCreate"},
         };
         app.put('/actor',
-            authenticateMiddleware([{"jwt":[]}]),
+            authenticateMiddleware([{"jwt":["admin"]}]),
             ...(fetchMiddlewares<RequestHandler>(ActorController)),
             ...(fetchMiddlewares<RequestHandler>(ActorController.prototype.createActor)),
 
@@ -849,7 +977,7 @@ export function RegisterRoutes(app: Router) {
                 body: {"in":"body","name":"body","required":true,"ref":"IActorUpdate"},
         };
         app.patch('/actor/:actorId',
-            authenticateMiddleware([{"jwt":[]}]),
+            authenticateMiddleware([{"jwt":["admin"]}]),
             ...(fetchMiddlewares<RequestHandler>(ActorController)),
             ...(fetchMiddlewares<RequestHandler>(ActorController.prototype.updateActor)),
 
@@ -880,7 +1008,7 @@ export function RegisterRoutes(app: Router) {
                 actorId: {"in":"path","name":"actorId","required":true,"dataType":"double"},
         };
         app.delete('/actor/:actorId',
-            authenticateMiddleware([{"jwt":[]}]),
+            authenticateMiddleware([{"jwt":["admin"]}]),
             ...(fetchMiddlewares<RequestHandler>(ActorController)),
             ...(fetchMiddlewares<RequestHandler>(ActorController.prototype.deleteActor)),
 

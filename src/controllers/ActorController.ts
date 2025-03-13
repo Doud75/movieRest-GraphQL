@@ -39,6 +39,7 @@ export class ActorController {
    * Créer un nouvel acteur
    */
   @Put()
+  @Security('jwt', ['admin'])
   public async createActor(
     @Body() body: IActorCreate
   ): Promise<IORMCreateResponse> {
@@ -67,6 +68,7 @@ export class ActorController {
    * Mettre à jour un acteur avec le ID passé dans le URL
    */
   @Patch('{actorId}')
+  @Security('jwt', ['admin'])
   public async updateActor(
     @Path() actorId: number,
     @Body() body: IActorUpdate
@@ -83,6 +85,7 @@ export class ActorController {
    * Supprimer un acteur
    */
   @Delete('{actorId}')
+  @Security('jwt', ['admin'])
   public async deleteActor(
     @Path() actorId: number,
   ): Promise<IORMDeleteResponse> {

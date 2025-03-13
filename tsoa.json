@@ -10,6 +10,10 @@
           "type": "apiKey",
           "name": "jwt",
           "in": "header",
+          "scopes": {
+            "admin": "Accès administrateur pour gérer les films",
+            "user": "Accès utilisateur standard"
+          },
           "authorizationUrl": "http://swagger.io/api/oauth/dialog"
         }
       }

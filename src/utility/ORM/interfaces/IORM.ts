@@ -137,3 +137,28 @@ export interface IORMDeleteResponse {
   id: number|string;
   rows: number;
 }
+
+/**
+ * Requête pour récupérer les relations many-to-many.
+ */
+export interface IORMFindManyToManyRequest {
+  mainTable: DbTable;
+  mainKey: string;
+  mainValue: number;
+  joinTable: DbTable;
+  joinKey: string;
+  targetTable: DbTable;
+  targetColumns: string[];
+}
+
+/**
+ * Requête pour gérer (ajouter/supprimer) une relation many-to-many.
+ */
+export interface IORMManageManyToManyRequest {
+  mainTable: DbTable;
+  mainKey: string;
+  mainValue: number;
+  joinTable: DbTable;
+  joinKey: string;
+  targetValue: number;
+}

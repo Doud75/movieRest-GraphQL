@@ -33,6 +33,7 @@ export class UserController {
    * Créer un nouvel utilisateur
    */
   @Put()
+  @Security('jwt', ['admin'])
   public async createUser(
     @Body() body: IUserCreate
   ): Promise<IORMCreateResponse> {
@@ -61,6 +62,7 @@ export class UserController {
    * Mettre à jour un utilisateur avec le ID passé dans le URL
    */
   @Patch('{userId}')
+  @Security('jwt', ['admin'])
   public async updateUser(
     @Path() userId: number,
     @Body() body: IUserUpdate
@@ -77,6 +79,7 @@ export class UserController {
    * Supprimer un utilisateur
    */
   @Delete('{userId}')
+  @Security('jwt', ['admin'])
   public async deleteUser(
     @Path() userId: number,
   ): Promise<IORMDeleteResponse> {

@@ -11,7 +11,8 @@ create table if not exists user (
   email varchar(256) unique not null, 
   familyName varchar(256), 
   givenName varchar(256), 
-  balance int default 0, 
+  role enum('admin', 'user') DEFAULT 'user',
+  balance int default 0,
   primary key(userId)
 );
 

@@ -635,6 +635,10 @@
 				"type": "apiKey",
 				"name": "jwt",
 				"in": "header",
+				"scopes": {
+					"admin": "Accès administrateur pour gérer les films",
+					"user": "Accès utilisateur standard"
+				},
 				"authorizationUrl": "http://swagger.io/api/oauth/dialog"
 			}
 		}
@@ -664,7 +668,13 @@
 					}
 				},
 				"description": "Envoyer un fichier",
-				"security": [],
+				"security": [
+					{
+						"jwt": [
+							"admin"
+						]
+					}
+				],
 				"parameters": [
 					{
 						"description": "Le ID de l'utilisateur",
@@ -807,7 +817,9 @@
 				"description": "Créer un nouvel utilisateur",
 				"security": [
 					{
-						"jwt": []
+						"jwt": [
+							"admin"
+						]
 					}
 				],
 				"parameters": [],
@@ -873,7 +885,9 @@
 				"description": "Mettre à jour un utilisateur avec le ID passé dans le URL",
 				"security": [
 					{
-						"jwt": []
+						"jwt": [
+							"admin"
+						]
 					}
 				],
 				"parameters": [
@@ -915,7 +929,9 @@
 				"description": "Supprimer un utilisateur",
 				"security": [
 					{
-						"jwt": []
+						"jwt": [
+							"admin"
+						]
 					}
 				],
 				"parameters": [
@@ -1010,7 +1026,9 @@
 				"description": "Créer un nouveau film",
 				"security": [
 					{
-						"jwt": []
+						"jwt": [
+							"admin"
+						]
 					}
 				],
 				"parameters": [],
@@ -1076,7 +1094,9 @@
 				"description": "Mettre à jour un film avec le ID passé dans le URL",
 				"security": [
 					{
-						"jwt": []
+						"jwt": [
+							"admin"
+						]
 					}
 				],
 				"parameters": [
@@ -1118,6 +1138,45 @@
 				"description": "Supprimer un film",
 				"security": [
 					{
+						"jwt": [
+							"admin"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "filmId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/film/{filmId}/actor": {
+			"get": {
+				"operationId": "GetActorsByFilm",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/IActor"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"description": "🔹 Récupérer tous les acteurs d'un film.",
+				"security": [
+					{
 						"jwt": []
 					}
 				],
@@ -1125,6 +1184,156 @@
 					{
 						"in": "path",
 						"name": "filmId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/film/{filmId}/actor/{actorId}": {
+			"get": {
+				"operationId": "GetActorByFilm",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/IActor"
+										}
+									],
+									"nullable": true
+								}
+							}
+						}
+					}
+				},
+				"description": "🔹 Récupérer un acteur spécifique d'un film.",
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "filmId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "actorId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "AddActorToFilm",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"success": {
+											"type": "boolean"
+										}
+									},
+									"required": [
+										"success"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"description": "🔹 Ajouter un acteur à un film (ADMIN uniquement).",
+				"security": [
+					{
+						"jwt": [
+							"admin"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "filmId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "actorId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"delete": {
+				"operationId": "RemoveActorFromFilm",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"success": {
+											"type": "boolean"
+										}
+									},
+									"required": [
+										"success"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"description": "🔹 Supprimer un acteur d'un film (ADMIN uniquement).",
+				"security": [
+					{
+						"jwt": [
+							"admin"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "filmId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "actorId",
 						"required": true,
 						"schema": {
 							"format": "double",
@@ -1166,8 +1375,7 @@
 							"schema": {
 								"properties": {
 									"email": {
-										"type": "string",
-										"description": "Identifiant de l'utilisateur."
+										"type": "string"
 									}
 								},
 								"required": [
@@ -1283,7 +1491,9 @@
 				"description": "Créer un nouvel acteur",
 				"security": [
 					{
-						"jwt": []
+						"jwt": [
+							"admin"
+						]
 					}
 				],
 				"parameters": [],
@@ -1349,7 +1559,9 @@
 				"description": "Mettre à jour un acteur avec le ID passé dans le URL",
 				"security": [
 					{
-						"jwt": []
+						"jwt": [
+							"admin"
+						]
 					}
 				],
 				"parameters": [
@@ -1391,7 +1603,9 @@
 				"description": "Supprimer un acteur",
 				"security": [
 					{
-						"jwt": []
+						"jwt": [
+							"admin"
+						]
 					}
 				],
 				"parameters": [
