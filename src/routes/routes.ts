@@ -10,7 +10,11 @@ import { UserController } from './../controllers/UserController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { InfoController } from './../controllers/InfoController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { FilmController } from './../controllers/FilmController';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { AuthController } from './../controllers/AuthController';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { ActorController } from './../controllers/ActorController';
 import { expressAuthentication } from './../utility/auth/authentication.middleware';
 // @ts-ignore - no great way to install types from subpackage
 import type { Request as ExRequest, Response as ExResponse, RequestHandler, Router } from 'express';
@@ -127,6 +131,109 @@ const models: TsoaRoute.Models = {
             "database": {"dataType":"nestedObjectLiteral","nestedProperties":{"error":{"dataType":"string"},"state":{"dataType":"union","subSchemas":[{"dataType":"enum","enums":["connected"]},{"dataType":"enum","enums":["disconnected"]}],"required":true}},"required":true},
         },
         "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "IFilm": {
+        "dataType": "refObject",
+        "properties": {
+            "film_id": {"dataType":"double","required":true},
+            "title": {"dataType":"string","required":true},
+            "description": {"dataType":"string"},
+            "release_year": {"dataType":"double"},
+            "language_id": {"dataType":"double","required":true},
+            "original_language_id": {"dataType":"double"},
+            "rental_duration": {"dataType":"double"},
+            "rental_rate": {"dataType":"double"},
+            "length": {"dataType":"double"},
+            "replacement_cost": {"dataType":"double"},
+            "rating": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["G"]},{"dataType":"enum","enums":["PG"]},{"dataType":"enum","enums":["PG-13"]},{"dataType":"enum","enums":["R"]},{"dataType":"enum","enums":["NC-17"]}]},
+            "special_features": {"dataType":"array","array":{"dataType":"union","subSchemas":[{"dataType":"enum","enums":["Trailers"]},{"dataType":"enum","enums":["Commentaries"]},{"dataType":"enum","enums":["Deleted Scenes"]},{"dataType":"enum","enums":["Behind the Scenes"]}]}},
+            "last_update": {"dataType":"string"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "IORMIndexResponse_IFilm_": {
+        "dataType": "refObject",
+        "properties": {
+            "page": {"dataType":"double","required":true},
+            "limit": {"dataType":"double","required":true},
+            "total": {"dataType":"double","required":true},
+            "rows": {"dataType":"array","array":{"dataType":"refObject","ref":"IFilm"},"required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Pick_IFilm.Exclude_keyofIFilm.film_id__": {
+        "dataType": "refAlias",
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"title":{"dataType":"string","required":true},"description":{"dataType":"string"},"release_year":{"dataType":"double"},"language_id":{"dataType":"double","required":true},"original_language_id":{"dataType":"double"},"rental_duration":{"dataType":"double"},"rental_rate":{"dataType":"double"},"length":{"dataType":"double"},"replacement_cost":{"dataType":"double"},"rating":{"dataType":"union","subSchemas":[{"dataType":"enum","enums":["G"]},{"dataType":"enum","enums":["PG"]},{"dataType":"enum","enums":["PG-13"]},{"dataType":"enum","enums":["R"]},{"dataType":"enum","enums":["NC-17"]}]},"special_features":{"dataType":"array","array":{"dataType":"union","subSchemas":[{"dataType":"enum","enums":["Trailers"]},{"dataType":"enum","enums":["Commentaries"]},{"dataType":"enum","enums":["Deleted Scenes"]},{"dataType":"enum","enums":["Behind the Scenes"]}]}},"last_update":{"dataType":"string"}},"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Omit_IFilm.film_id_": {
+        "dataType": "refAlias",
+        "type": {"ref":"Pick_IFilm.Exclude_keyofIFilm.film_id__","validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "IFilmCreate": {
+        "dataType": "refAlias",
+        "type": {"ref":"Omit_IFilm.film_id_","validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Partial_IFilmCreate_": {
+        "dataType": "refAlias",
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"title":{"dataType":"string"},"description":{"dataType":"string"},"release_year":{"dataType":"double"},"language_id":{"dataType":"double"},"original_language_id":{"dataType":"double"},"rental_duration":{"dataType":"double"},"rental_rate":{"dataType":"double"},"length":{"dataType":"double"},"replacement_cost":{"dataType":"double"},"rating":{"dataType":"union","subSchemas":[{"dataType":"enum","enums":["G"]},{"dataType":"enum","enums":["PG"]},{"dataType":"enum","enums":["PG-13"]},{"dataType":"enum","enums":["R"]},{"dataType":"enum","enums":["NC-17"]}]},"special_features":{"dataType":"array","array":{"dataType":"union","subSchemas":[{"dataType":"enum","enums":["Trailers"]},{"dataType":"enum","enums":["Commentaries"]},{"dataType":"enum","enums":["Deleted Scenes"]},{"dataType":"enum","enums":["Behind the Scenes"]}]}},"last_update":{"dataType":"string"}},"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "IFilmUpdate": {
+        "dataType": "refAlias",
+        "type": {"ref":"Partial_IFilmCreate_","validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "IActor": {
+        "dataType": "refObject",
+        "properties": {
+            "actor_id": {"dataType":"double","required":true},
+            "first_name": {"dataType":"string","required":true},
+            "last_name": {"dataType":"string","required":true},
+            "last_update": {"dataType":"datetime"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "IORMIndexResponse_IActor_": {
+        "dataType": "refObject",
+        "properties": {
+            "page": {"dataType":"double","required":true},
+            "limit": {"dataType":"double","required":true},
+            "total": {"dataType":"double","required":true},
+            "rows": {"dataType":"array","array":{"dataType":"refObject","ref":"IActor"},"required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Pick_IActor.Exclude_keyofIActor.actor_id__": {
+        "dataType": "refAlias",
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"last_update":{"dataType":"datetime"},"first_name":{"dataType":"string","required":true},"last_name":{"dataType":"string","required":true}},"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Omit_IActor.actor_id_": {
+        "dataType": "refAlias",
+        "type": {"ref":"Pick_IActor.Exclude_keyofIActor.actor_id__","validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "IActorCreate": {
+        "dataType": "refAlias",
+        "type": {"ref":"Omit_IActor.actor_id_","validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Partial_IActorCreate_": {
+        "dataType": "refAlias",
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"last_update":{"dataType":"datetime"},"first_name":{"dataType":"string"},"last_name":{"dataType":"string"}},"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "IActorUpdate": {
+        "dataType": "refAlias",
+        "type": {"ref":"Partial_IActorCreate_","validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 };
@@ -426,6 +533,163 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        const argsFilmController_getFilms: Record<string, TsoaRoute.ParameterSchema> = {
+                page: {"in":"query","name":"page","dataType":"string"},
+                limit: {"in":"query","name":"limit","dataType":"string"},
+        };
+        app.get('/film',
+            authenticateMiddleware([{"jwt":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(FilmController)),
+            ...(fetchMiddlewares<RequestHandler>(FilmController.prototype.getFilms)),
+
+            async function FilmController_getFilms(request: ExRequest, response: ExResponse, next: any) {
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args: argsFilmController_getFilms, request, response });
+
+                const controller = new FilmController();
+
+              await templateService.apiHandler({
+                methodName: 'getFilms',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        const argsFilmController_createFilm: Record<string, TsoaRoute.ParameterSchema> = {
+                body: {"in":"body","name":"body","required":true,"ref":"IFilmCreate"},
+        };
+        app.put('/film',
+            authenticateMiddleware([{"jwt":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(FilmController)),
+            ...(fetchMiddlewares<RequestHandler>(FilmController.prototype.createFilm)),
+
+            async function FilmController_createFilm(request: ExRequest, response: ExResponse, next: any) {
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args: argsFilmController_createFilm, request, response });
+
+                const controller = new FilmController();
+
+              await templateService.apiHandler({
+                methodName: 'createFilm',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        const argsFilmController_readFilm: Record<string, TsoaRoute.ParameterSchema> = {
+                filmId: {"in":"path","name":"filmId","required":true,"dataType":"double"},
+        };
+        app.get('/film/:filmId',
+            authenticateMiddleware([{"jwt":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(FilmController)),
+            ...(fetchMiddlewares<RequestHandler>(FilmController.prototype.readFilm)),
+
+            async function FilmController_readFilm(request: ExRequest, response: ExResponse, next: any) {
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args: argsFilmController_readFilm, request, response });
+
+                const controller = new FilmController();
+
+              await templateService.apiHandler({
+                methodName: 'readFilm',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        const argsFilmController_updateFilm: Record<string, TsoaRoute.ParameterSchema> = {
+                filmId: {"in":"path","name":"filmId","required":true,"dataType":"double"},
+                body: {"in":"body","name":"body","required":true,"ref":"IFilmUpdate"},
+        };
+        app.patch('/film/:filmId',
+            authenticateMiddleware([{"jwt":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(FilmController)),
+            ...(fetchMiddlewares<RequestHandler>(FilmController.prototype.updateFilm)),
+
+            async function FilmController_updateFilm(request: ExRequest, response: ExResponse, next: any) {
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args: argsFilmController_updateFilm, request, response });
+
+                const controller = new FilmController();
+
+              await templateService.apiHandler({
+                methodName: 'updateFilm',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        const argsFilmController_deleteFilm: Record<string, TsoaRoute.ParameterSchema> = {
+                filmId: {"in":"path","name":"filmId","required":true,"dataType":"double"},
+        };
+        app.delete('/film/:filmId',
+            authenticateMiddleware([{"jwt":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(FilmController)),
+            ...(fetchMiddlewares<RequestHandler>(FilmController.prototype.deleteFilm)),
+
+            async function FilmController_deleteFilm(request: ExRequest, response: ExResponse, next: any) {
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args: argsFilmController_deleteFilm, request, response });
+
+                const controller = new FilmController();
+
+              await templateService.apiHandler({
+                methodName: 'deleteFilm',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         const argsAuthController_sendMagicLink: Record<string, TsoaRoute.ParameterSchema> = {
                 body: {"in":"body","name":"body","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"email":{"dataType":"string","required":true}}},
         };
@@ -475,6 +739,163 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'authorizeFromLink',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        const argsActorController_getActors: Record<string, TsoaRoute.ParameterSchema> = {
+                page: {"in":"query","name":"page","dataType":"string"},
+                limit: {"in":"query","name":"limit","dataType":"string"},
+        };
+        app.get('/actor',
+            authenticateMiddleware([{"jwt":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(ActorController)),
+            ...(fetchMiddlewares<RequestHandler>(ActorController.prototype.getActors)),
+
+            async function ActorController_getActors(request: ExRequest, response: ExResponse, next: any) {
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args: argsActorController_getActors, request, response });
+
+                const controller = new ActorController();
+
+              await templateService.apiHandler({
+                methodName: 'getActors',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        const argsActorController_createActor: Record<string, TsoaRoute.ParameterSchema> = {
+                body: {"in":"body","name":"body","required":true,"ref":"IActorCreate"},
+        };
+        app.put('/actor',
+            authenticateMiddleware([{"jwt":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(ActorController)),
+            ...(fetchMiddlewares<RequestHandler>(ActorController.prototype.createActor)),
+
+            async function ActorController_createActor(request: ExRequest, response: ExResponse, next: any) {
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args: argsActorController_createActor, request, response });
+
+                const controller = new ActorController();
+
+              await templateService.apiHandler({
+                methodName: 'createActor',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        const argsActorController_readActor: Record<string, TsoaRoute.ParameterSchema> = {
+                actorId: {"in":"path","name":"actorId","required":true,"dataType":"double"},
+        };
+        app.get('/actor/:actorId',
+            authenticateMiddleware([{"jwt":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(ActorController)),
+            ...(fetchMiddlewares<RequestHandler>(ActorController.prototype.readActor)),
+
+            async function ActorController_readActor(request: ExRequest, response: ExResponse, next: any) {
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args: argsActorController_readActor, request, response });
+
+                const controller = new ActorController();
+
+              await templateService.apiHandler({
+                methodName: 'readActor',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        const argsActorController_updateActor: Record<string, TsoaRoute.ParameterSchema> = {
+                actorId: {"in":"path","name":"actorId","required":true,"dataType":"double"},
+                body: {"in":"body","name":"body","required":true,"ref":"IActorUpdate"},
+        };
+        app.patch('/actor/:actorId',
+            authenticateMiddleware([{"jwt":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(ActorController)),
+            ...(fetchMiddlewares<RequestHandler>(ActorController.prototype.updateActor)),
+
+            async function ActorController_updateActor(request: ExRequest, response: ExResponse, next: any) {
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args: argsActorController_updateActor, request, response });
+
+                const controller = new ActorController();
+
+              await templateService.apiHandler({
+                methodName: 'updateActor',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        const argsActorController_deleteActor: Record<string, TsoaRoute.ParameterSchema> = {
+                actorId: {"in":"path","name":"actorId","required":true,"dataType":"double"},
+        };
+        app.delete('/actor/:actorId',
+            authenticateMiddleware([{"jwt":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(ActorController)),
+            ...(fetchMiddlewares<RequestHandler>(ActorController.prototype.deleteActor)),
+
+            async function ActorController_deleteActor(request: ExRequest, response: ExResponse, next: any) {
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args: argsActorController_deleteActor, request, response });
+
+                const controller = new ActorController();
+
+              await templateService.apiHandler({
+                methodName: 'deleteActor',
                 controller,
                 response,
                 next,

@@ -5,6 +5,36 @@ USE sakila;
 -- (Pas de dépendances)
 --
 
+/* user */
+create table if not exists user (
+  userId int auto_increment not null,
+  email varchar(256) unique not null, 
+  familyName varchar(256), 
+  givenName varchar(256), 
+  balance int default 0, 
+  primary key(userId)
+);
+
+drop trigger if exists before_insert_user;
+
+create trigger before_insert_user
+before insert
+on user for each row set new.email = lower(trim(new.email));
+
+/* ... */
+
+
+/* Fichier d'un utilisateur */
+create table if not exists user_file (
+  fileId int auto_increment not null,
+  userId int not null,
+  storageKey varchar(512) not null,
+  filename varchar(256),
+  mimeType varchar(256),
+  primary key(fileId),
+  foreign key(userId) references user(userId) on delete cascade
+);
+
 CREATE TABLE actor (
   actor_id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
   first_name VARCHAR(45) NOT NULL,
@@ -184,6 +214,17 @@ CREATE TABLE film (
   CONSTRAINT fk_film_language FOREIGN KEY (language_id) REFERENCES language (language_id) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT fk_film_language_original FOREIGN KEY (original_language_id) REFERENCES language (language_id) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+/* Fichier d'un utilisateur */
+create table if not exists film_file (
+  fileId int auto_increment not null,
+  filmId SMALLINT UNSIGNED NOT NULL,
+  storageKey varchar(512) not null,
+  filename varchar(256),
+  mimeType varchar(256),
+  primary key(fileId),
+  foreign key(filmId) references film(film_id) on delete cascade
+);
 
 --
 -- Table structure for table film_text
