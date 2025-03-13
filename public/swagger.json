@@ -278,6 +278,65 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"IFilmFile": {
+				"properties": {
+					"fileId": {
+						"type": "number",
+						"format": "double"
+					},
+					"filmId": {
+						"type": "number",
+						"format": "double"
+					},
+					"storageKey": {
+						"type": "string"
+					},
+					"filename": {
+						"type": "string"
+					},
+					"mimeType": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"fileId",
+					"filmId",
+					"storageKey"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IORMIndexResponse_IFilmFile_": {
+				"description": "Réspone à une opération de lecture de plusieurs lignes.",
+				"properties": {
+					"page": {
+						"type": "number",
+						"format": "double"
+					},
+					"limit": {
+						"type": "number",
+						"format": "double"
+					},
+					"total": {
+						"type": "number",
+						"format": "double"
+					},
+					"rows": {
+						"items": {
+							"$ref": "#/components/schemas/IFilmFile"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"page",
+					"limit",
+					"total",
+					"rows"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"IFilm": {
 				"properties": {
 					"film_id": {
@@ -965,6 +1024,109 @@
 				"description": "Récupérer une page d'utilisateurs.",
 				"security": [],
 				"parameters": []
+			}
+		},
+		"/film/{filmId}/file": {
+			"put": {
+				"operationId": "UploadFile",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IORMCreateResponse"
+								}
+							}
+						}
+					}
+				},
+				"description": "🔹 Uploader une image pour un film (ADMIN uniquement)",
+				"security": [
+					{
+						"jwt": [
+							"admin"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "filmId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"get": {
+				"operationId": "ShowFiles",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IORMIndexResponse_IFilmFile_"
+								}
+							}
+						}
+					}
+				},
+				"description": "🔹 Récupérer la liste des fichiers d’un film",
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "filmId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "page",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/film/{filmId}/file/{fileId}": {
+			"get": {
+				"operationId": "DownloadFile",
+				"responses": {
+					"200": {
+						"description": "Chunked object stream"
+					}
+				},
+				"description": "🔹 Télécharger un fichier selon son ID",
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "fileId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
 			}
 		},
 		"/film": {

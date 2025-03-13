@@ -10,6 +10,8 @@ import { UserController } from './../controllers/UserController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { InfoController } from './../controllers/InfoController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { FilmFileController } from './../controllers/FilmFileController';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { FilmController } from './../controllers/FilmController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { AuthController } from './../controllers/AuthController';
@@ -129,6 +131,29 @@ const models: TsoaRoute.Models = {
             "platform": {"dataType":"string","required":true},
             "type": {"dataType":"string","required":true},
             "database": {"dataType":"nestedObjectLiteral","nestedProperties":{"error":{"dataType":"string"},"state":{"dataType":"union","subSchemas":[{"dataType":"enum","enums":["connected"]},{"dataType":"enum","enums":["disconnected"]}],"required":true}},"required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "IFilmFile": {
+        "dataType": "refObject",
+        "properties": {
+            "fileId": {"dataType":"double","required":true},
+            "filmId": {"dataType":"double","required":true},
+            "storageKey": {"dataType":"string","required":true},
+            "filename": {"dataType":"string"},
+            "mimeType": {"dataType":"string"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "IORMIndexResponse_IFilmFile_": {
+        "dataType": "refObject",
+        "properties": {
+            "page": {"dataType":"double","required":true},
+            "limit": {"dataType":"double","required":true},
+            "total": {"dataType":"double","required":true},
+            "rows": {"dataType":"array","array":{"dataType":"refObject","ref":"IFilmFile"},"required":true},
         },
         "additionalProperties": false,
     },
@@ -528,6 +553,101 @@ export function RegisterRoutes(app: Router) {
                 next,
                 validatedArgs,
                 successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        const argsFilmFileController_uploadFile: Record<string, TsoaRoute.ParameterSchema> = {
+                filmId: {"in":"path","name":"filmId","required":true,"dataType":"double"},
+                request: {"in":"request","name":"request","required":true,"dataType":"object"},
+        };
+        app.put('/film/:filmId/file',
+            authenticateMiddleware([{"jwt":["admin"]}]),
+            ...(fetchMiddlewares<RequestHandler>(FilmFileController)),
+            ...(fetchMiddlewares<RequestHandler>(FilmFileController.prototype.uploadFile)),
+
+            async function FilmFileController_uploadFile(request: ExRequest, response: ExResponse, next: any) {
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args: argsFilmFileController_uploadFile, request, response });
+
+                const controller = new FilmFileController();
+
+              await templateService.apiHandler({
+                methodName: 'uploadFile',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        const argsFilmFileController_showFiles: Record<string, TsoaRoute.ParameterSchema> = {
+                filmId: {"in":"path","name":"filmId","required":true,"dataType":"double"},
+                page: {"in":"query","name":"page","dataType":"string"},
+                limit: {"in":"query","name":"limit","dataType":"string"},
+        };
+        app.get('/film/:filmId/file',
+            ...(fetchMiddlewares<RequestHandler>(FilmFileController)),
+            ...(fetchMiddlewares<RequestHandler>(FilmFileController.prototype.showFiles)),
+
+            async function FilmFileController_showFiles(request: ExRequest, response: ExResponse, next: any) {
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args: argsFilmFileController_showFiles, request, response });
+
+                const controller = new FilmFileController();
+
+              await templateService.apiHandler({
+                methodName: 'showFiles',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        const argsFilmFileController_downloadFile: Record<string, TsoaRoute.ParameterSchema> = {
+                fileId: {"in":"path","name":"fileId","required":true,"dataType":"double"},
+                request: {"in":"request","name":"request","required":true,"dataType":"object"},
+        };
+        app.get('/film/:filmId/file/:fileId',
+            ...(fetchMiddlewares<RequestHandler>(FilmFileController)),
+            ...(fetchMiddlewares<RequestHandler>(FilmFileController.prototype.downloadFile)),
+
+            async function FilmFileController_downloadFile(request: ExRequest, response: ExResponse, next: any) {
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args: argsFilmFileController_downloadFile, request, response });
+
+                const controller = new FilmFileController();
+
+              await templateService.apiHandler({
+                methodName: 'downloadFile',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: 200,
               });
             } catch (err) {
                 return next(err);
