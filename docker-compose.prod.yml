@@ -1,0 +1,38 @@
+services:
+  api:
+    image: api
+    ports:
+      - "5050:5050"
+    env_file: ".env"
+    networks:
+      - api-prod-network
+    restart: always
+    labels:
+      api_logging: "true"
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: "500m"
+    
+  dbms:
+    image: mariadb
+    restart: always
+    ports:
+      - "3309:3306"
+    environment: 
+      - MYSQL_ALLOW_EMPTY_PASSWORD=false
+      - MYSQL_ROOT_PASSWORD=Q8qUnHTp3aVuwDdy
+    command: [
+      "--character-set-server=utf8mb4",
+      "--collation-server=utf8mb4_unicode_ci",
+    ]
+    volumes:
+      - ./.data-prod:/var/lib/mysql
+    networks:
+      - api-prod-network
+
+networks:
+  api-prod-network:
+    driver: bridge
+    name: api-prod-network

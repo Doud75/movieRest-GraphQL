@@ -11,11 +11,13 @@ export class JWT {
 
   constructor() {
     if (!JWT.PRIVATE_KEY) {
-      JWT.PRIVATE_KEY = readFileSync(process.env.PRIVATE_KEY_FILE || join('config', 'signing', 'signing.key'), 'ascii')
+      console.log(process.env.PRIVATE_KEY_FILE)
+      console.log(process.env.PUBLIC_KEY_FILE)
+      JWT.PRIVATE_KEY = process.env.PRIVATE_KEY_FILE ||  readFileSync( join('config', 'signing', 'signing.key'), 'ascii')
     }
 
     if (!JWT.PUBLIC_KEY) {
-      JWT.PUBLIC_KEY = readFileSync(process.env.PUBLIC_KEY_FILE || join('config', 'signing', 'signing.pub'), 'ascii')
+      JWT.PUBLIC_KEY =process.env.PUBLIC_KEY_FILE ||  readFileSync( join('config', 'signing', 'signing.pub'), 'ascii')
     }
   }
 

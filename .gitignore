@@ -51,6 +51,7 @@ docker-compose.override.yml
 
 # fichiers/dossiers temporaires
 .data/
+.data-prod/
 
 # keys
 config/signing
