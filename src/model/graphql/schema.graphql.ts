@@ -1,10 +1,10 @@
 export const GRAPHQL_SCHEMA = `#graphql
 
 type User {
-  userId: Int!             # Not null
+  userId: Int!             
   familyName: String
   givenName: String
-  email: String!           # Not null
+  email: String!           
   files: [UserFile!]
 }
 
@@ -16,9 +16,25 @@ type UserFile {
   mimeType: String!     
 }
 
+type Film {
+  film_id: Int!
+  title: String!
+  description: String
+  release_year: Int
+  actors: [Actor!]!
+}
+
+type Actor {
+  actor_id: Int!
+  first_name: String!
+  last_name: String!
+}
+
 type Query {
   users: [User]
   user(userId: Int!): User
+  films: [Film!]!
+  film(film_id: Int!): Film
 }
 
 input UserDetails {

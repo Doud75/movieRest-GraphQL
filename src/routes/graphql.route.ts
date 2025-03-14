@@ -18,23 +18,8 @@ export const initGraphQL = async (server: Server) => {
   const router = Router({ mergeParams: true });
 
   router.use(
-    <any>expressMiddleware(apollo, {
-      /*
-      context: async ({ req, res }) => {
-        try {
-          return await expressAuthentication(<any>req, 'jwt');        
-        } catch (err: any) {
-          throw new GraphQLError('User is not authenticated', {
-            extensions: {
-              code: 'UNAUTHENTICATED',
-              http: { status: err.httpCode },
-            }
-          });
-        }
-      }
-      */
-    })
-  )
+    <any>expressMiddleware(apollo, {})
+  );
 
   return router;
-}
+};

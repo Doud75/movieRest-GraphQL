@@ -133,19 +133,32 @@ export class ORM {
   public static async FindManyToMany<T>(options: IORMFindManyToManyRequest): Promise<T[]> {
     const db = DB.Connection;
     try {
-      const query = `
-        SELECT ${options.targetColumns.join(", ")}
-        FROM ${options.targetTable}
-        INNER JOIN ${options.joinTable} ON ${options.joinTable}.${options.joinKey} = ${options.targetTable}.${options.joinKey}
-        WHERE ${options.joinTable}.${options.mainKey} = ?
-      `;
-      const [rows] = await db.query<T[] & RowDataPacket[]>(query, [options.mainValue]);
+        // ✅ On ajoute `options.targetTable.` uniquement si ce n'est pas déjà fait
+        const targetColumns = options.targetColumns.map(col => 
+            col.includes(".") ? col : `${options.targetTable}.${col}`
+        ).join(", ");
 
-      return rows.length > 0 ? rows : [];
+        const query = `
+            SELECT ${targetColumns}
+            FROM ${options.targetTable}
+            INNER JOIN ${options.joinTable} 
+                ON ${options.joinTable}.${options.joinKey} = ${options.targetTable}.${options.joinKey}
+            WHERE ${options.joinTable}.${options.mainKey} = ?
+        `;
+
+        console.log("Executing Query:", query, "With Value:", options.mainValue);
+        const [rows] = await db.query<T[] & RowDataPacket[]>(query, [options.mainValue]);
+
+        return rows.length > 0 ? rows : [];
     } catch (error) {
-      throw new ApiError(ErrorCode.BadRequest, 'sql/query-failed', `Erreur lors de la récupération des relations ${options.joinTable}`, { details: error });
+        throw new ApiError(ErrorCode.BadRequest, 'sql/query-failed', 
+            `Erreur lors de la récupération des relations ${options.joinTable}`, 
+            { details: error }
+        );
     }
   }
+
+
 
   /**
    * Vérifier si une relation existe dans une table de liaison
